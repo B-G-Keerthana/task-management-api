@@ -114,7 +114,7 @@ using (var scope = app.Services.CreateScope())
             TaskName = "Adminstration",
             Description = "Prepare Report",
             Status = "Pending",
-            userId = "61c26ccd-dfb0-4f39-820c-067db886a858"
+            UserId = "61c26ccd-dfb0-4f39-820c-067db886a858"
         },
         new TaskItem
         {
@@ -122,7 +122,7 @@ using (var scope = app.Services.CreateScope())
             TaskName = "Development",
             Description = "Development of Web Application",
             Status = "Active",
-            userId = "61c26ccd-dfb0-4f39-820c-067db886a859"
+            UserId = "61c26ccd-dfb0-4f39-820c-067db886a859"
         },
         new TaskItem
         {
@@ -130,7 +130,7 @@ using (var scope = app.Services.CreateScope())
             TaskName = "Hiring",
             Description = "Hire Resources",
             Status = "InActive",
-            userId = "61c26ccd-dfb0-4f39-820c-067db886a860"
+            UserId = "61c26ccd-dfb0-4f39-820c-067db886a860"
         }
     };
 

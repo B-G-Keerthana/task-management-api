@@ -30,10 +30,39 @@ namespace TaskManagementAPI.Controllers
         {
             _logger.LogInformation("Admin creating a new task: {@Task}", task);
 
-            _service.Create(task);
+            try
+            {
+                _service.Create(task);
 
-            _logger.LogInformation("Task created successfully.");
-            return Ok();
+                _logger.LogInformation("Task created successfully.");
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Task created successfully.",
+                    taskId = task.Id
+                });
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogWarning(ex, "Task creation failed due to invalid input.");
+
+                return BadRequest(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error occurred while creating task.");
+
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = "An unexpected error occurred. Please try again later."
+                });
+            }
         }
 
         // GET: api/tasks/{id}
@@ -103,10 +132,25 @@ namespace TaskManagementAPI.Controllers
         {
             _logger.LogInformation("Admin attempting to delete task ID {TaskId}.", id);
 
-            _service.Delete(id);
-
-            _logger.LogInformation("Task ID {TaskId} deleted successfully.", id);
-            return Ok("User deleted!");
+            try
+            {
+                _service.Delete(id);
+                _logger.LogInformation("Task ID {TaskId} deleted successfully.", id);
+                return Ok(new
+                {
+                    success = true,
+                    message = $"Task with ID {id} was successfully deleted."
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Task ID {TaskId} not found.", id);
+                return NotFound(new
+                {
+                    success = false,
+                    message = ex.Message
+                });
+            }
         }
 
         // GET: api/tasks

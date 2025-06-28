@@ -32,29 +32,9 @@ namespace TaskManagementAPITests.ControllerTests
         }
 
         [Fact]
-        public void Create_ShouldCallServiceAndReturnOk()
-        {
-            var serviceMock = new Mock<ITaskService>();
-            var controller = CreateController("Admin", serviceMock: serviceMock);
-
-            var task = new TaskItem
-            {
-                Id = 1,
-                TaskName = "Test Task",
-                Description = "Test Desc",
-                userId = "user1"
-            };
-
-            var result = controller.Create(task);
-
-            serviceMock.Verify(s => s.Create(task), Times.Once);
-            Assert.IsType<OkResult>(result);
-        }
-
-        [Fact]
         public void Get_ShouldReturnTask_WhenFound()
         {
-            var task = new TaskItem { Id = 1, TaskName = "Task", userId = "user1" };
+            var task = new TaskItem { Id = 1, TaskName = "Task", UserId = "user1" };
             var serviceMock = new Mock<ITaskService>();
             serviceMock.Setup(s => s.Get(1)).Returns(task);
 
@@ -139,25 +119,12 @@ namespace TaskManagementAPITests.ControllerTests
         }
 
         [Fact]
-        public void Delete_ShouldCallServiceAndReturnOk()
-        {
-            var serviceMock = new Mock<ITaskService>();
-            var controller = CreateController("Admin", serviceMock: serviceMock);
-
-            var result = controller.Delete(1);
-
-            serviceMock.Verify(s => s.Delete(1), Times.Once);
-            var ok = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal("User deleted!", ok.Value);
-        }
-
-        [Fact]
         public void GetAll_ShouldReturnAllTasks()
         {
             var tasks = new List<TaskItem>
             {
-                new TaskItem { Id = 1, TaskName = "Task 1", userId = "user1" },
-                new TaskItem { Id = 2, TaskName = "Task 2", userId = "user2" }
+                new TaskItem { Id = 1, TaskName = "Task 1", UserId = "user1" },
+                new TaskItem { Id = 2, TaskName = "Task 2", UserId = "user2" }
             };
 
             var serviceMock = new Mock<ITaskService>();

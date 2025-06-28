@@ -41,7 +41,7 @@ namespace TaskManagementAPI.Services
         public TaskItem? Get(int id)
         {
             var task = _db.Tasks.Find(id);
-            if (_user.Role == "Admin" || task?.userId == _user.UserId)
+            if (_user.Role == "Admin" || task?.UserId == _user.UserId)
             {
                 _logger.LogInformation("Task {TaskId} retrieved by user {UserId}.", id, _user.UserId);
                 return task;
@@ -79,7 +79,7 @@ namespace TaskManagementAPI.Services
                 throw new KeyNotFoundException("Task not found");
             }
 
-            if (task.userId != userId)
+            if (task.UserId != userId)
             {
                 _logger.LogWarning("User {UserId} attempted to update task {TaskId} they do not own.", userId, taskId);
                 throw new UnauthorizedAccessException("You do not own this task.");
@@ -100,9 +100,27 @@ namespace TaskManagementAPI.Services
         // Creates a new task
         public void Create(TaskItem item)
         {
+            if (string.IsNullOrWhiteSpace(item.TaskName))
+            {
+                _logger.LogWarning("Task creation failed: TaskName is required.");
+                throw new ArgumentException("TaskName is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(item.Status))
+            {
+                _logger.LogWarning("Task creation failed: Status is required.");
+                throw new ArgumentException("Status is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(item.UserId))
+            {
+                _logger.LogWarning("Task creation failed: Valid UserId is required.");
+                throw new ArgumentException("Valid UserId is required.");
+            }
+
             _db.Tasks.Add(item);
             _db.SaveChanges();
-            _logger.LogInformation("Task created with ID {TaskId} by user {UserId}.", item.Id, item.userId);
+            _logger.LogInformation("Task created with ID {TaskId} by user {UserId}.", item.Id, item.UserId);
         }
 
         // Deletes a task by ID
@@ -118,7 +136,9 @@ namespace TaskManagementAPI.Services
             else
             {
                 _logger.LogWarning("Attempted to delete non-existent task {TaskId}.", id);
+                throw new KeyNotFoundException($"Task with ID {id} not found.");
             }
         }
+
     }
 }

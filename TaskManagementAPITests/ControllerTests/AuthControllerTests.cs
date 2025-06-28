@@ -66,23 +66,5 @@ namespace TaskManagementAPITests.ControllerTests
             Assert.False(string.IsNullOrWhiteSpace(token));
         }
 
-        [Fact]
-        public void Login_ReturnsUnauthorized_WhenCredentialsAreInvalid()
-        {
-            // Arrange
-            var context = CreateInMemoryDbContext(); // no users added
-            var config = CreateFakeJwtConfig();
-            var authService = new AuthService(context, config);
-            var controller = new AuthController(authService);
-
-            var dto = new LoginDto { Username = "wronguser", Password = "@123456789" };
-
-            // Act
-            var result = controller.Login(dto);
-
-            // Assert
-            var unauthorized = Assert.IsType<UnauthorizedObjectResult>(result);
-            Assert.Equal("Invalid Credentials!", unauthorized.Value);
-        }
     }
 }

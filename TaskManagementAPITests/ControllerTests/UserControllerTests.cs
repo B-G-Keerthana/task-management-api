@@ -37,7 +37,9 @@ namespace TaskManagementAPITests.ControllerTests
         {
             using var context = CreateDbContext();
             var mockService = new Mock<IUserService>();
-            var controller = new UsersController(context, mockService.Object);
+            var mockLogger = new Mock<ILogger<UsersController>>();
+
+            var controller = new UsersController(context, mockService.Object, mockLogger.Object);
 
             var dto = new AddUserDto
             {
@@ -59,7 +61,10 @@ namespace TaskManagementAPITests.ControllerTests
         {
             using var context = CreateDbContext();
             var mockService = new Mock<IUserService>();
-            var controller = new UsersController(context, mockService.Object);
+            var mockLogger = new Mock<ILogger<UsersController>>();
+
+            var controller = new UsersController(context, mockService.Object, mockLogger.Object);
+            //var controller = new UsersController(context, mockService.Object);
 
             var result = controller.GetUserById(Guid.NewGuid());
 
@@ -85,8 +90,10 @@ namespace TaskManagementAPITests.ControllerTests
             var mockService = new Mock<IUserService>();
             mockService.Setup(s => s.UpdateUser(It.IsAny<User>(), It.IsAny<UpdateUserDto>(), It.IsAny<string>()))
                        .Throws(new InvalidOperationException("You are not allowed to update UserName or Role."));
+            var mockLogger = new Mock<ILogger<UsersController>>();
 
-            var controller = new UsersController(context, mockService.Object);
+            var controller = new UsersController(context, mockService.Object, mockLogger.Object);
+            //var controller = new UsersController(context, mockService.Object);
             controller.ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext
@@ -121,7 +128,10 @@ namespace TaskManagementAPITests.ControllerTests
             context.SaveChanges();
 
             var mockService = new Mock<IUserService>();
-            var controller = new UsersController(context, mockService.Object);
+            var mockLogger = new Mock<ILogger<UsersController>>();
+
+            var controller = new UsersController(context, mockService.Object, mockLogger.Object);
+            //var controller = new UsersController(context, mockService.Object);
 
             var result = controller.DeleteUser(user.Id) as OkObjectResult;
 

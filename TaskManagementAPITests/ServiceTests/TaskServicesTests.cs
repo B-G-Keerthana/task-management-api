@@ -37,7 +37,7 @@ namespace TaskManagementAPITests.ServiceTests
                 TaskName = "Old Name",
                 Description = "Old Desc",
                 Status = "Pending",
-                userId = "admin"
+                UserId = "admin"
             };
 
             context.Tasks.Add(task);
