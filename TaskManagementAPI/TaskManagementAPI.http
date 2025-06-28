@@ -1,0 +1,43 @@
+@TaskManagementAPI_HostAddress = https://localhost:7147
+
+GET {{TaskManagementAPI_HostAddress}}/api/users
+
+###
+
+POST {{TaskManagementAPI_HostAddress}}/api/users
+Content-Type: application/json
+[
+{
+  "userName": "Stuart",
+  "userEmail": "stu@gmail.com",
+  "phone": "+974-10101044",
+  "role": "Admin"
+},
+{
+  "userName": "tom",
+  "userEmail": "tom@gmail.com",
+  "phone": "+974-10101055",
+  "role": "User"
+}
+]
+###
+
+GET {{TaskManagementAPI_HostAddress}}/api/users/61c26ccd-dfb0-4f39-820c-067db886a859
+###
+
+PUT {{TaskManagementAPI_HostAddress}}/api/users/61c26ccd-dfb0-4f39-820c-067db886a859
+Content-Type: application/json
+
+{
+  "userName": "BobUpdated",
+  "userEmail": "bobUpdated@gmail.com",
+  "phone": "+974-10102222",
+  "role": "Admin"
+}
+
+###
+
+@id=61c26ccd-dfb0-4f39-820c-067db886a859
+DELETE {{TaskManagementAPI_HostAddress}}/api/Users/{{id}}
+
+###
