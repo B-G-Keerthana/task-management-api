@@ -60,5 +60,3 @@ https://localhost:7147/swagger/index.html
 > If it doesn't open automatically, copy and paste the URL into your browser.
 
 ---
-
-Feel free to customize the port or project name as needed.
