@@ -15,7 +15,50 @@ Task Management API .Net project.
 
 ## Getting Started
 
-1. Clone the repo
-2. Run `dotnet restore`
-3. Run `dotnet run`
-4. Open Swagger at `https://localhost:7147/swagger/index.html`
+### 1. Clone the Repository
+
+Clone this repository to your local machine and navigate to the desired directory:
+
+```bash
+cd <your-location>
+```
+
+### 2. Create and Build the Project
+
+Run the following commands to scaffold and build the Web API project:
+
+```bash
+dotnet new webapi -n TaskManagementAPI
+cd TaskManagementAPI
+msbuild TaskManagementAPI.csproj
+```
+
+### 3. Restore Dependencies
+
+Restore the required NuGet packages:
+
+```bash
+dotnet restore
+```
+
+### 4. Run the Application
+
+Click the **Run** button at the top of Visual Studio Code, or use the terminal:
+
+```bash
+dotnet run
+```
+
+### 5. Access Swagger UI
+
+Once the application is running, open your browser and navigate to:
+
+```
+https://localhost:7147/swagger/index.html
+```
+
+> If it doesn't open automatically, copy and paste the URL into your browser.
+
+---
+
+Feel free to customize the port or project name as needed.
